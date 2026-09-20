@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ramon Fernando Daniel Kemptner">
+    <meta name="description" content="BioMateria: interfaz biomolecular interactiva para la exploración visual de una célula digital viva.">
+    <meta name="date" content="2026-09-20">
+    <meta name="citation_title" content="BioMateria: Laboratorio vivo">
+    <meta name="citation_author" content="Kemptner, Ramon Fernando Daniel">
+    <meta name="citation_publication_date" content="2026/09/20">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BioMateria / Laboratorio vivo">
+    <meta property="og:description" content="Interfaz biomolecular interactiva para la comunidad científica.">
+    <meta property="og:locale" content="es_ES">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "BioMateria: Laboratorio vivo",
+            "author": {
+                "@type": "Person",
+                "name": "Ramon Fernando Daniel Kemptner"
+            },
+            "dateCreated": "2026-09-20",
+            "dateModified": "2026-09-20",
+            "inLanguage": "es",
+            "applicationCategory": "EducationalApplication",
+            "description": "Interfaz biomolecular interactiva para la exploración visual de una célula digital viva."
+        }
+    </script>
+    <title>BioMateria / Laboratorio vivo</title>
+    <style>
+        :root { --ink:#071b1c; --paper:#e8eee4; --mint:#8fe3c1; --lime:#d8ef76; --coral:#f27f68; --line:rgba(232,238,228,.16); --soft:rgba(232,238,228,.62); }
+        * { box-sizing:border-box; }
+        body { min-height:100vh; margin:0; overflow-x:hidden; color:var(--paper); background:radial-gradient(circle at 76% 18%,rgba(242,127,104,.13),transparent 25rem),radial-gradient(circle at 12% 82%,rgba(143,227,193,.1),transparent 24rem),var(--ink); font-family:Georgia,'Times New Roman',serif; }
+        body::before { position:fixed; inset:0; z-index:-1; opacity:.18; pointer-events:none; content:''; background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(to bottom,black,transparent 80%); }
+        button,input { font:inherit; } button { cursor:pointer; }
+        .shell { width:min(1420px,calc(100% - 48px)); margin:0 auto; }
+        .topbar { display:flex; align-items:center; justify-content:space-between; min-height:82px; border-bottom:1px solid var(--line); }
+        .brand { display:flex; align-items:center; gap:12px; letter-spacing:.12em; font:700 .78rem Arial,sans-serif; text-transform:uppercase; }
+        .brand-mark { width:22px; height:22px; border:1px solid var(--mint); border-radius:50%; box-shadow:inset 0 0 0 4px var(--ink),inset 0 0 0 5px var(--mint); }
+        .live { display:flex; align-items:center; gap:8px; color:var(--soft); font:.72rem Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+        .live::before { width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 14px var(--lime); content:''; animation:blink 1.8s ease-in-out infinite; }
+        .intro { display:grid; grid-template-columns:minmax(260px,.8fr) minmax(440px,1.4fr); gap:8vw; align-items:end; padding:72px 0 34px; }
+        .eyebrow { margin:0 0 18px; color:var(--coral); font:700 .72rem Arial,sans-serif; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { max-width:650px; margin:0; font-size:clamp(3rem,7vw,7.6rem); font-weight:400; line-height:.88; letter-spacing:-.055em; } h1 i { color:var(--mint); }
+        .intro-copy { max-width:510px; margin:0 0 5px; color:var(--soft); font:1.05rem/1.6 Arial,sans-serif; }
+        .workspace { display:grid; grid-template-columns:minmax(0,1.75fr) minmax(270px,.65fr); gap:18px; padding-bottom:42px; }
+        .visual { position:relative; min-height:620px; overflow:hidden; border:1px solid var(--line); background:rgba(6,28,28,.75); }
+        #moleculeCanvas { display:block; width:100%; height:100%; min-height:620px; }
+        .visual-label { position:absolute; top:22px; left:24px; font:.7rem Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; } .visual-label span { color:var(--mint); }
+        .hint { position:absolute; right:24px; bottom:22px; max-width:180px; color:var(--soft); font:.76rem/1.4 Arial,sans-serif; text-align:right; }
+        .controls { display:flex; flex-direction:column; justify-content:space-between; padding:26px; border:1px solid var(--line); background:rgba(232,238,228,.055); }
+        .controls h2 { margin:0 0 30px; font-size:1.55rem; font-weight:400; }
+        .metric { padding:18px 0; border-top:1px solid var(--line); } .metric-head { display:flex; justify-content:space-between; margin-bottom:12px; color:var(--soft); font:.73rem Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; } .metric-value { color:var(--lime); font-size:1rem; letter-spacing:0; }
+        input[type=range] { width:100%; accent-color:var(--mint); }
+        .button-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:18px; }
+        .control-button { padding:13px 8px; border:1px solid var(--mint); color:var(--ink); background:var(--mint); font:700 .7rem Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; transition:transform 180ms ease,background 180ms ease; } .control-button:hover { transform:translateY(-2px); background:var(--lime); } .control-button.secondary { color:var(--paper); background:transparent; } .control-button.secondary:hover { color:var(--ink); }
+        .readout { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding-bottom:64px; } .readout-item { padding:18px 0 0; border-top:1px solid var(--line); } .readout-label { display:block; margin-bottom:8px; color:var(--soft); font:.68rem Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; } .readout strong { font-size:1.6rem; font-weight:400; } .readout em { color:var(--coral); font:italic .8rem Arial,sans-serif; }
+        .authorship { display:flex; justify-content:space-between; gap:24px; padding:18px 0 28px; border-top:1px solid var(--line); color:var(--soft); font:0.7rem/1.5 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+        .authorship strong { color:var(--paper); font-weight:400; }
+        @keyframes blink { 50% { opacity:.35; } }
+        @media(max-width:850px) { .shell { width:min(100% - 28px,680px); } .intro { grid-template-columns:1fr; gap:28px; padding:52px 0 28px; } .workspace { grid-template-columns:1fr; } .visual,#moleculeCanvas { min-height:490px; } .controls { gap:30px; } }
+        @media(max-width:480px) { .topbar { min-height:68px; } .live { font-size:.6rem; } h1 { font-size:3.6rem; } .readout { gap:7px; } .readout strong { font-size:1.2rem; } }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span> BioMateria / 04</div><div class="live">Sistema activo</div></header>
+        <section class="intro"><div><p class="eyebrow">Interfaz biomolecular</p><h1>Materia que<br><i>respira.</i></h1></div><p class="intro-copy">Un pequeño ecosistema digital en observación. Cada partícula responde a la energía, se aproxima al pulso central y deja una huella de movimiento.</p></section>
+        <section class="workspace" aria-label="Simulación biomolecular interactiva">
+            <div class="visual"><canvas id="moleculeCanvas" aria-label="Simulación visual de una célula biomolecular"></canvas><div class="visual-label">Muestra <span id="sampleState">estable</span></div><div class="hint">Haz clic en el campo para introducir una molécula.</div></div>
+            <aside class="controls"><div><h2>Parámetros<br>de cultivo</h2><div class="metric"><div class="metric-head"><span>Energía</span><span class="metric-value" id="energyValue">64%</span></div><input id="energyInput" type="range" min="20" max="100" value="64" aria-label="Nivel de energía"></div><div class="metric"><div class="metric-head"><span>Velocidad</span><span class="metric-value" id="speedValue">1.0x</span></div><input id="speedInput" type="range" min="4" max="20" value="10" aria-label="Velocidad de la simulación"></div></div><div><div class="metric-head"><span>Protocolo</span><span class="metric-value">activo</span></div><div class="button-row"><button class="control-button" id="pulseButton" type="button">Emitir pulso</button><button class="control-button secondary" id="resetButton" type="button">Reiniciar</button></div></div></aside>
+        </section>
+        <section class="readout" aria-label="Lecturas de la muestra"><div class="readout-item"><span class="readout-label">Moléculas en campo</span><strong id="moleculeCount">28</strong></div><div class="readout-item"><span class="readout-label">Pulso de membrana</span><strong id="pulseReadout">0.82</strong> <em>mV</em></div><div class="readout-item"><span class="readout-label">Ritmo de actividad</span><strong id="activityReadout">alto</strong></div></section>
+        <footer class="authorship"><span>Autoría científica: <strong>Ramon Fernando Daniel Kemptner</strong></span><span>20 septiembre 2026 · Versión 1.0</span></footer>
+    </main>
+    <script>
+        const elements = { canvas:document.getElementById('moleculeCanvas'), energyInput:document.getElementById('energyInput'), energyValue:document.getElementById('energyValue'), speedInput:document.getElementById('speedInput'), speedValue:document.getElementById('speedValue'), pulseButton:document.getElementById('pulseButton'), resetButton:document.getElementById('resetButton'), sampleState:document.getElementById('sampleState'), moleculeCount:document.getElementById('moleculeCount'), pulseReadout:document.getElementById('pulseReadout'), activityReadout:document.getElementById('activityReadout') };
+        const context = elements.canvas.getContext('2d'); const palette = ['#8fe3c1','#d8ef76','#f27f68','#f3c969']; let molecules=[]; let pulseStrength=0; let lastTime=0;
+        function resizeCanvas() { const ratio=window.devicePixelRatio||1; const bounds=elements.canvas.getBoundingClientRect(); elements.canvas.width=bounds.width*ratio; elements.canvas.height=bounds.height*ratio; context.setTransform(ratio,0,0,ratio,0,0); }
+        function canvasSize() { const bounds=elements.canvas.getBoundingClientRect(); return { width:bounds.width, height:bounds.height }; }
+        function createMolecule(x,y,radius=3+Math.random()*4) { molecules.push({x,y,radius,angle:Math.random()*Math.PI*2,orbit:12+Math.random()*110,drift:.2+Math.random()*.8,color:palette[Math.floor(Math.random()*palette.length)],phase:Math.random()*Math.PI*2}); }
+        function resetMolecules() { const {width,height}=canvasSize(); molecules=[]; for(let index=0;index<28;index++){ const angle=Math.random()*Math.PI*2; const distance=55+Math.random()*Math.min(width,height)*.38; createMolecule(width/2+Math.cos(angle)*distance,height/2+Math.sin(angle)*distance,3+Math.random()*4); } updateReadout(); }
+        function emitPulse() { pulseStrength=1; elements.sampleState.textContent='respondiendo'; window.setTimeout(()=>{ elements.sampleState.textContent='estable'; },900); }
+        function updateReadout() { const energy=Number(elements.energyInput.value); elements.moleculeCount.textContent=molecules.length; elements.activityReadout.textContent=energy>72?'alto':energy>45?'medio':'bajo'; }
+        function drawBackground(width,height,time) { context.clearRect(0,0,width,height); const gradient=context.createRadialGradient(width/2,height/2,10,width/2,height/2,Math.max(width,height)*.7); gradient.addColorStop(0,'rgba(26,83,72,.7)'); gradient.addColorStop(.5,'rgba(7,35,34,.38)'); gradient.addColorStop(1,'rgba(4,19,20,0)'); context.fillStyle=gradient; context.fillRect(0,0,width,height); context.strokeStyle='rgba(143,227,193,.09)'; context.lineWidth=1; for(let ring=1;ring<5;ring++){ context.beginPath(); context.arc(width/2,height/2,ring*Math.min(width,height)*.105+Math.sin(time*.0008+ring)*4,0,Math.PI*2); context.stroke(); } }
+        function drawDna(width,height,time) { const centerX=width/2,top=height/2-142,bottom=height/2+142; context.lineWidth=2; for(const offset of [0,Math.PI]){ context.strokeStyle='rgba(216,239,118,.75)'; context.beginPath(); for(let y=top;y<=bottom;y+=4){ const wave=Math.sin((y-top)*.045+time*.0012+offset)*31; y===top?context.moveTo(centerX+wave,y):context.lineTo(centerX+wave,y); } context.stroke(); } for(let y=top+9;y<bottom;y+=22){ const wave=Math.sin((y-top)*.045+time*.0012)*31,opposite=Math.sin((y-top)*.045+time*.0012+Math.PI)*31; context.strokeStyle='rgba(242,127,104,.58)'; context.beginPath(); context.moveTo(centerX+wave,y); context.lineTo(centerX+opposite,y); context.stroke(); } }
+        function drawMembrane(width,height,time) { const radius=Math.min(width,height)*.31+pulseStrength*18,centerX=width/2,centerY=height/2; context.save(); context.translate(centerX,centerY); context.rotate(time*.00008); context.lineWidth=2; context.strokeStyle='rgba(143,227,193,.7)'; context.shadowBlur=22; context.shadowColor='rgba(143,227,193,.5)'; context.beginPath(); for(let index=0;index<=80;index++){ const angle=index/80*Math.PI*2,wobble=Math.sin(angle*6+time*.002)*7+Math.cos(angle*3-time*.001)*4,distance=radius+wobble,x=Math.cos(angle)*distance,y=Math.sin(angle)*distance*.74; index===0?context.moveTo(x,y):context.lineTo(x,y); } context.closePath(); context.stroke(); context.restore(); }
+        function drawMolecules(width,height,time,delta) { const energy=Number(elements.energyInput.value)/64,speed=Number(elements.speedInput.value)/10,centerX=width/2,centerY=height/2; molecules.forEach(molecule=>{ molecule.angle+=molecule.drift*delta*.0012*speed*energy; const targetX=centerX+Math.cos(molecule.angle)*molecule.orbit,targetY=centerY+Math.sin(molecule.angle)*molecule.orbit*.74; molecule.x+=(targetX-molecule.x)*delta*.0014*speed; molecule.y+=(targetY-molecule.y)*delta*.0014*speed; const radius=molecule.radius+Math.sin(time*.003+molecule.phase)*1.2+pulseStrength*2; context.shadowBlur=12; context.shadowColor=molecule.color; context.fillStyle=molecule.color; context.beginPath(); context.arc(molecule.x,molecule.y,radius,0,Math.PI*2); context.fill(); context.shadowBlur=0; }); }
+        function render(time) { const {width,height}=canvasSize(); const delta=Math.min(time-lastTime||16,40); lastTime=time; pulseStrength*=.93; drawBackground(width,height,time); drawDna(width,height,time); drawMolecules(width,height,time,delta); drawMembrane(width,height,time); elements.pulseReadout.textContent=(.72+Math.sin(time*.0016)*.1+pulseStrength*.25).toFixed(2); requestAnimationFrame(render); }
+        elements.canvas.addEventListener('click',event=>{ const bounds=elements.canvas.getBoundingClientRect(); createMolecule(event.clientX-bounds.left,event.clientY-bounds.top,4+Math.random()*4); updateReadout(); });
+        elements.energyInput.addEventListener('input',()=>{ elements.energyValue.textContent=`${elements.energyInput.value}%`; updateReadout(); }); elements.speedInput.addEventListener('input',()=>{ elements.speedValue.textContent=`${(elements.speedInput.value/10).toFixed(1)}x`; }); elements.pulseButton.addEventListener('click',emitPulse); elements.resetButton.addEventListener('click',resetMolecules); window.addEventListener('resize',()=>{ resizeCanvas(); resetMolecules(); });
+        resizeCanvas(); resetMolecules(); requestAnimationFrame(render);
+    </script>
+</body>
+</html>

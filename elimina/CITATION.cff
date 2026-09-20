@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Si utiliza BioMateria en una investigación, publicación o actividad educativa, cite este trabajo."
+title: "BioMateria: Laboratorio vivo"
+type: software
+authors:
+  - family-names: Kemptner
+    given-names: Ramon Fernando Daniel
+date-released: 2026-09-20
+version: "1.0"
+abstract: "Interfaz biomolecular interactiva para la exploración visual de una célula digital viva. La experiencia permite observar moléculas en movimiento, ajustar energía y velocidad, y emitir pulsos sobre la membrana simulada."
+keywords:
+  - biomolecular visualization
+  - interactive simulation
+  - scientific communication
+  - digital biology
+  - educational technology
+language: es
